@@ -19,10 +19,13 @@ AI QMaker is a web application designed to assist educators in creating question
 
 **Screenshots:**
 
-![Screenshot 1: Input Form](screenshot1.png)  <-- Replace with your actual screenshot file.
+![Screenshot 1: Input Form](screenshot1.png)  
 *This screenshot shows the input form where educators paste their text, select question type and number.*
 
-![Screenshot 2: Download Options](screenshot2.png)  <-- Replace with your actual screenshot file.
+![Screenshot 2: Generated Questions](screenshot2.png)  
+*This screenshot shows the generated questions displayed on the page.*
+
+![Screenshot 3: Download Options](screenshot3.png)  
 *This screenshot shows the download options allowing educators to customize their output.*
 
 **Instructions for Using AI QMaker:**
@@ -34,7 +37,7 @@ AI QMaker is a web application designed to assist educators in creating question
 5. **Generate Questions:** Click the "Generate Questions" button.
 6. **Review Generated Questions:** The generated questions will appear below the form. Carefully review them for accuracy and relevance.
 7. **Download Options (Optional):**  If you're ready to download the questions:
-    * Click the "Print Question" button.
+    * Click the "Print Question" button. *(This will reveal the download options form)*
     * Fill in the institute, exam type, date, and duration.
     * Choose whether to include answers by selecting the appropriate radio button.
 8. **Download:** Click the "Download" button to download the questions as a `.txt` file.
