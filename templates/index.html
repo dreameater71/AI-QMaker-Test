@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI QMaker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            background-color: #3498db;
+            color: white;
+            padding: 20px 0;
+            margin: 0;
+            width: 100%;
+        }
+        form {
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"], button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .markdown-body {
+            box-sizing: border-box;
+            min-width: 200px;
+            max-width: 980px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 45px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 767px) {
+            .markdown-body {
+                padding: 15px;
+            }
+        }
+        #printForm {
+            display: none; /* Initially hidden */
+            margin-top: 20px;
+            width: 100%;
+        }
+        .download-options {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI QMaker</h1>
+    
+    <form method="POST">
+        <label for="article">Enter the article:</label>
+        <textarea id="article" name="article" rows="10" cols="50" required></textarea>
+        
+        <label for="question_type">Select the type of questions:</label>
+        <select id="question_type" name="question_type">
+            <option value="Multiple Choice (Single Answer)">Multiple Choice (Single Answer)</option>
+            <option value="Multiple Choice (Multiple Answers)">Multiple Choice (Multiple Answers)</option>
+            <option value="True/False">True/False</option>
+            <option value="Matching">Matching</option>
+            <option value="Fill-in-the-blank Questions (Short Answer)">Fill-in-the-blank Questions (Short Answer)</option>
+            <option value="Essay Questions (Descriptive)">Essay Questions (Descriptive)</option>
+            <option value="Essay Questions (Explanatory)">Essay Questions (Explanatory)</option>
+            <option value="Essay Questions (Argumentative)">Essay Questions (Argumentative)</option>
+            <option value="Essay Questions (Comparative)">Essay Questions (Comparative)</option>
+            <option value="Essay Questions (Analytical)">Essay Questions (Analytical)</option>
+            <option value="Problem-Solving Questions">Problem-Solving Questions</option>
+            <option value="Case Studies">Case Studies</option>
+            <option value="Short Answer Questions">Short Answer Questions</option>
+            <option value="Oral Examinations">Oral Examinations</option>
+        </select>
+        
+        <label for="num_questions">Number of questions:</label>
+        <input type="number" id="num_questions" name="num_questions" value="5" min="1">
+        
+        <input type="submit" value="Generate Questions">
+    </form>
+
+    {% if answer %}
+    <div class="markdown-body">
+        {{ answer|safe }} <!-- Display the generated questions -->
+    </div>
+    <button onclick="showPrintForm()">Print Question</button>
+    
+    <form id="printForm" action="/download" method="POST" style="display: none;">
+        <label for="institute">Institute:</label>
+        <input type="text" id="institute" name="institute" required><br>
+        
+        <label for="exam_type">Exam Type:</label>
+        <input type="text" id="exam_type" name="exam_type" required><br>
+        
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required class="flatpickr"><br>
+        
+        <label for="duration">Duration:</label>
+        <input type="text" id="duration" name="duration" required><br>
+        
+        <input type="hidden" id="questionsContent" name="questions" value="{{ answer }}">
+        
+        <div class="download-options">
+            <label>
+                <input type="radio" name="include_answers" value="yes" checked>
+                Question with Answer
+            </label>
+            <label>
+                <input type="radio" name="include_answers" value="no">
+                Question without Answer
+            </label>
+        </div>
+        
+        <center><button type="submit">Download</button></center>
+    </form>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <script>
+        flatpickr(".flatpickr", {
+            dateFormat: "Y-m-d",
+            defaultDate: new Date()
+        });
+
+        function showPrintForm() {
+            document.getElementById('printForm').style.display = 'block';
+        }
+    </script>
+    {% endif %}
+</body>
+</html>
